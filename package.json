@@ -1,0 +1,35 @@
+{
+  "name": "linguee-client",
+  "version": "0.1.0",
+  "description": "A simple node.js Linguee client.",
+  "main": "lib/linguee.js",
+  "scripts": {
+    "testOld": "tape ./test/*-test.js | tap-spec",
+    "test": "mocha ./test/*-test.js -w",
+    "test:single": "mocha ./test/*-test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javierdwd/linguee-client.git"
+  },
+  "keywords": [
+    "linguee",
+    "client",
+    "translate",
+    "translator"
+  ],
+  "author": "Javier <javierdwd@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/javierdwd/linguee-client/issues"
+  },
+  "homepage": "https://github.com/javierdwd/linguee-client#readme",
+  "devDependencies": {
+    "mocha": "5.2.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "iconv-lite": "^0.4.24"
+  }
+}
