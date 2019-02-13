@@ -115,7 +115,7 @@ describe("Linguee Extractor", () => {
     });
   });
 
-  context("Validate successful responses (fs) of Linguee.com", () => {
+  context.skip("Validate successful responses (fs) of Linguee.com", () => {
     it("the storage should contain exactly the same data", () => {
       htmlResponse = readExampleFile("term-EN-ES-answer");
       $ = cheerio.load(htmlResponse);
