@@ -30,6 +30,22 @@ describe("Base Extractor", () => {
       extractor.run({});
     }, /cheerio instance/);
   });
+
+  it("should return an object", () => {
+    const storage = {
+      objectProperty: {
+        childProperty: ""
+      },
+      nullProperty: null
+    };
+
+    extractor._setStorage(storage);
+
+    assert.deepStrictEqual(extractor.getObject("nullProperty"), {});
+    assert.deepStrictEqual(extractor.getObject("objectProperty"), {
+      childProperty: ""
+});
+  });
 });
 
 describe("Translation Extractor", () => {
