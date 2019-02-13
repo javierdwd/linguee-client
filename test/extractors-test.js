@@ -44,7 +44,7 @@ describe("Base Extractor", () => {
     assert.deepStrictEqual(extractor.getObject("nullProperty"), {});
     assert.deepStrictEqual(extractor.getObject("objectProperty"), {
       childProperty: ""
-});
+    });
   });
 });
 
@@ -73,16 +73,22 @@ describe("Translation Extractor", () => {
 
 describe("Word Extractor", () => {
   const extractor = ExtractorsFactory.create("word");
-  const storage = {};
 
-  let htmlResponse = readExampleFile("term-EN-ES-answer");
-  const $ = cheerio.load(htmlResponse);
+  const $ = cheerio.load(readExampleFile("term-EN-ES-answer"));
+  const storage = extractor.run($(".exact .lemma").eq(1));
 
-  $word = $(".exact .lemma").eq(0);
-  extractor.run($word, storage);
+  const $2 = cheerio.load(readExampleFile("term-EN-ES-nation"));
+  const storage2 = extractor.run($2(".exact .lemma").eq(0));
 
   it("should extract the basic data", () => {
-    assert.deepStrictEqual(storage.term, "answer");
+    assert.strictEqual(storage.type, "verb");
+    assert.strictEqual(storage.additionalInfo.context, "sb./sth.");
+    assert.deepStrictEqual(storage.additionalInfo.verbs, [
+      "answered",
+      "answered"
+    ]);
+    assert.strictEqual(storage2.term, "nation");
+    assert.strictEqual(storage2.additionalInfo.plural, "nations");
   });
 });
 
