@@ -7,7 +7,6 @@
     "/lib"
   ],
   "scripts": {
-    "testOld": "tape ./test/*-test.js | tap-spec",
     "test": "mocha ./test/*-test.js -w",
     "test:single": "mocha ./test/*-test.js"
   },
