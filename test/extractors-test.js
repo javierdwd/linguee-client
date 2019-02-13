@@ -48,6 +48,27 @@ describe("Base Extractor", () => {
   });
 });
 
+describe("Audio Extractor", () => {
+  const extractor = ExtractorsFactory.create("audio");
+  const storage = {};
+
+  let htmlResponse = readExampleFile("term-EN-ES-answer");
+  const $ = cheerio.load(htmlResponse);
+
+  $audio = $(".exact .lemma a.audio").eq(0);
+
+  extractor.run($audio, storage);
+
+  it("should extract audio(s) and return their Urls and version", () => {
+    assert.strictEqual(storage.audio.length, 2);
+    assert.strictEqual(
+      storage.audio[0].url,
+      "https://www.linguee.com/mp3/EN_US/a3/a363b8d13575101a0226e8d0d054f2e7-100.mp3"
+    );
+    assert.strictEqual(storage.audio[0].version, "American English");
+  });
+});
+
 describe("Translation Extractor", () => {
   const extractor = ExtractorsFactory.create("translation");
   const storage = {};
