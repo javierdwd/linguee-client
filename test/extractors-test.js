@@ -60,12 +60,12 @@ describe("Audio Extractor", () => {
   extractor.run($audio, storage);
 
   it("should extract audio(s) and return their Urls and version", () => {
-    assert.strictEqual(storage.audio.length, 2);
+    assert.strictEqual(storage.audios.length, 2);
     assert.strictEqual(
-      storage.audio[0].url,
+      storage.audios[0].url,
       "https://www.linguee.com/mp3/EN_US/a3/a363b8d13575101a0226e8d0d054f2e7-100.mp3"
     );
-    assert.strictEqual(storage.audio[0].version, "American English");
+    assert.strictEqual(storage.audios[0].version, "American English");
   });
 });
 
