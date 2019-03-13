@@ -111,6 +111,15 @@ describe("Word Extractor", () => {
     assert.strictEqual(storage2.term, "nation");
     assert.strictEqual(storage2.additionalInfo.plural, "nations");
   });
+
+  const $3 = cheerio.load(readExampleFile("term-EN-ES-war"));
+  const storage3 = extractor.run($3(".exact .lemma").eq(0));
+  const storage4 = extractor.run($3(".exact .lemma").eq(2));
+
+  it("should find non featured and uncommon translations", () => {
+    assert.strictEqual(storage3.uncommonTranslations.length, 1);
+    assert.strictEqual(storage4.translations.length, 3);
+  });
 });
 
 describe("Linguee Extractor", () => {
@@ -163,7 +172,7 @@ describe("Factory", () => {
   it("Should return an TranslationExtractor instance", () => {
     assert.ok(
       extractor.extractors.word.extractors.translation instanceof
-        TranslationExtractor
+      TranslationExtractor
     );
   });
 });
