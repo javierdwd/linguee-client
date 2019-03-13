@@ -37,7 +37,7 @@ linguee.translate("answer")
 
 ### **_TODOs_**
 
-- [ ] Improve responses with the less common translations, and audio examples.
+- [X] Improve responses with the less common translations, and audio examples.
 - [ ] Allow to set the languages for translation.
 
 ## License
