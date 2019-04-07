@@ -4,6 +4,7 @@ const cheerio = require("cheerio");
 const Extractor = require("../lib/extractors/Extractor");
 const TranslationExtractor = require("../lib/extractors/TranslationExtractor");
 const WordExtractor = require("../lib/extractors/WordExtractor");
+const WikiExtractor = require("../lib/extractors/WikiExtractor");
 const LingueeExtractor = require("../lib/extractors/LingueeExtractor");
 const ExtractorsFactory = require("../lib/extractors/ExtractorsFactory");
 
@@ -122,6 +123,34 @@ describe("Word Extractor", () => {
   });
 });
 
+describe("Wiki Extractor", () => {
+  const extractor = ExtractorsFactory.create("wiki");
+  const storage = {};
+
+  let htmlResponse = readExampleFile("term-EN-ES-sial");
+  const $ = cheerio.load(htmlResponse);
+
+  $wiki = $("#wikipedia-body");
+
+  extractor.run($wiki, storage);
+
+  it("should extract Wikipedia's provided information", () => {
+    assert.ok(storage.legal);
+    assert.strictEqual(storage.abstracts.length, 2);
+  });
+
+  it("should return the term along with a content and a reference url", () => {
+    assert.strictEqual(storage.abstracts[0].term, "Sial");
+    assert.doesNotThrow(() => {
+      const regExp = /^https?:\/\/[a-z]{2}\.wikipedia\.org.*$/;
+
+      if (regExp.test(storage.abstracts[0].sourceUrl) === false) {
+        throw new Error("Invalid source Url");
+      }
+    });
+  });
+});
+
 describe("Linguee Extractor", () => {
   const extractor = ExtractorsFactory.create("linguee");
 
@@ -155,6 +184,14 @@ describe("Linguee Extractor", () => {
     it("should find exact and inexact words", () => {
       assert.strictEqual(storage.words.length, 2);
       assert.strictEqual(storage2.inexactWords.length, 1);
+    });
+
+    htmlResponse = readExampleFile("term-EN-ES-sial");
+    const $3 = cheerio.load(htmlResponse);
+    const storage3 = extractor.run($3("#extractor-wrapper"));
+
+    it("should find wikipedia's articles briefs", () => {
+      assert.strictEqual(storage3.wiki.abstracts.length, 2);
     });
   });
 });

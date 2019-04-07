@@ -4,8 +4,8 @@ const axios = require("axios");
 const linguee = require("../lib/linguee");
 util = require("util");
 
-const term = "";
-const saveRAW = false;
+const term = "sial";
+const saveRAW = true;
 const saveJS = false;
 const langFrom = "english";
 const langTo = "spanish";
