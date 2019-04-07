@@ -124,8 +124,6 @@ describe("Word Extractor", () => {
 
 describe("Linguee Extractor", () => {
   const extractor = ExtractorsFactory.create("linguee");
-  let htmlResponse = "";
-  let $ = null;
 
   context("Validate non-successful responses (fs) of Linguee.com", () => {
     let storageA = {};
@@ -142,6 +140,21 @@ describe("Linguee Extractor", () => {
 
     it("should set the noResult property to true", () => {
       assert.deepStrictEqual(storageB.noResults, true);
+    });
+  });
+
+  context("Check the root resources founded", () => {
+    htmlResponse = readExampleFile("term-EN-ES-nation");
+    const $ = cheerio.load(htmlResponse);
+    const storage = extractor.run($("#extractor-wrapper"));
+
+    htmlResponse = readExampleFile("term-EN-ES-wherefores");
+    const $2 = cheerio.load(htmlResponse);
+    const storage2 = extractor.run($2("#extractor-wrapper"));
+
+    it("should find exact and inexact words", () => {
+      assert.strictEqual(storage.words.length, 2);
+      assert.strictEqual(storage2.inexactWords.length, 1);
     });
   });
 
@@ -172,7 +185,7 @@ describe("Factory", () => {
   it("Should return an TranslationExtractor instance", () => {
     assert.ok(
       extractor.extractors.word.extractors.translation instanceof
-      TranslationExtractor
+        TranslationExtractor
     );
   });
 });
