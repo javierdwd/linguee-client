@@ -1,12 +1,9 @@
 const fs = require("fs");
 const iconv = require("iconv-lite");
 const axios = require("axios");
-const linguee = require("../lib/linguee");
 util = require("util");
 
 const term = "";
-const saveRAW = false;
-const saveJS = false;
 const langFrom = "english";
 const langTo = "spanish";
 
@@ -35,28 +32,6 @@ function writeRAW() {
     });
 }
 
-async function writeJS() {
-  const data = await linguee.translate(term, "english", "spanish");
-
-  fs.writeFile(
-    `${__dirname}/examples/term-EN-ES-${term}.js`,
-    `module.exports = ${util.inspect(data, {
-      depth: null,
-      compact: false
-    })}`,
-    { flag: "w" },
-    err => {
-      if (err) throw err;
-      console.log("The JS file has been saved. Term: " + term);
-    }
-  );
-}
-
 if (term !== "") {
-  if (saveRAW) {
-    writeRAW();
-  }
-  if (saveJS) {
-    writeJS();
-  }
+  writeRAW();
 }
