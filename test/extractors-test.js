@@ -193,6 +193,16 @@ describe("Linguee Extractor", () => {
     it("should find wikipedia's articles briefs", () => {
       assert.strictEqual(storage3.wiki.abstracts.length, 2);
     });
+
+    htmlResponse = readExampleFile("term-EN-ES-wherefore");
+    const $4 = cheerio.load(htmlResponse);
+    const storage4 = extractor.run($4("#extractor-wrapper"));
+
+    it("should extract the spelling suggestion", () => {
+      assert.strictEqual(storage4.spelling.term, "therefore");
+      assert.strictEqual(storage4.spelling.queryTerm, "therefore");
+      assert.strictEqual(storage4.spelling.querySource, "auto");
+    });
   });
 });
 
