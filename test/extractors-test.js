@@ -157,18 +157,6 @@ describe("Linguee Extractor", () => {
       assert.strictEqual(storage2.inexactWords.length, 1);
     });
   });
-
-  context.skip("Validate successful responses (fs) of Linguee.com", () => {
-    it("the storage should contain exactly the same data", () => {
-      htmlResponse = readExampleFile("term-EN-ES-answer");
-      $ = cheerio.load(htmlResponse);
-
-      const fileStorageC = readExampleJsFile("term-EN-ES-answer");
-      let storageC = extractor.run($("#extractor-wrapper"));
-
-      assert.deepStrictEqual(storageC, fileStorageC);
-    });
-  });
 });
 
 describe("Factory", () => {
