@@ -125,11 +125,11 @@ describe("Word Extractor", () => {
 describe("Linguee Extractor", () => {
   const extractor = ExtractorsFactory.create("linguee");
 
-  context("Validate non-successful responses (fs) of Linguee.com", () => {
+  context("Test empty results", () => {
     let storageA = {};
     extractor._setStorage(storageA);
 
-    it("should return null", () => {
+    it("QueryTerm should be null", () => {
       assert.deepStrictEqual(storageA.queryTerm, null, "(non default value)");
     });
 
