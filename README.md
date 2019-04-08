@@ -9,9 +9,7 @@ It traverse the document (HTML response, there is not a JSON api available), hen
 
 ## Alpha release
 
-The current status is in Alpha. The library only translates from English to Spanish, because the url of the service is "hard-coded", and the response object isn't being filled out with all the available data.
-
-Support for this basic features are in progress.
+The current status is in Alpha the response object isn't being filled out with all the available data.
 
 ## Installation
 
@@ -37,8 +35,8 @@ linguee.translate("answer")
 
 ### **_TODOs_**
 
-- [X] Improve responses with the less common translations, and audio examples.
-- [ ] Allow to set the languages for translation.
+- [x] Improve responses with the less common translations, and audio examples.
+- [x] Allow to set the languages for translation.
 
 ## License
 
