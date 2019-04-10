@@ -1,6 +1,6 @@
 {
   "name": "linguee-client",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple node.js Linguee client.",
   "main": "lib/linguee.js",
   "files": [
