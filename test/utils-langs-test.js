@@ -18,4 +18,16 @@ describe("utils/langs", () => {
       name: "estonian"
     });
   });
+
+  it("should return the available languages for a specified code", () => {
+    assert.deepStrictEqual(langs.available("RU"), ["EN"]);
+
+    // prettier-ignore
+    assert.deepStrictEqual(langs.available("portuguese"), [
+      "EN", "DE", "FR", "ES", "IT",
+      "NL", "PL", "SV", "DA", "FI",
+      "EL", "CS", "RO", "HU", "SK",
+      "BG", "SL", "LT", "LV", "ET",
+      "MT"]);
+  });
 });
