@@ -7,10 +7,6 @@ Translate words using the Linguee online service.
 This library makes a background request to Linguee.com, parse the response and returns an object which contains a set of data.
 It traverse the document (HTML response, there is not a JSON api available), hence the results may be affected by changes in the DOM of the service.
 
-## Alpha release
-
-The current status is in Alpha the response object isn't being filled out with all the available data.
-
 ## Installation
 
 `npm install linguee-client`
