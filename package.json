@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "test": "mocha ./test/*-test.js -w",
-    "test:single": "mocha ./test/*-test.js"
+    "test:single": "nyc mocha ./test/*-test.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/javierdwd/linguee-client#readme",
   "devDependencies": {
-    "mocha": "5.2.0"
+    "mocha": "5.2.0",
+    "nyc": "14.1.0"
   },
   "dependencies": {
     "axios": "^0.18.0",
