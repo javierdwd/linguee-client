@@ -1,4 +1,5 @@
 # Lingue Client
+[![Build Status](https://travis-ci.org/javierdwd/linguee-client.svg?branch=master)](https://travis-ci.org/javierdwd/linguee-client)
 
 Translate words using the Linguee online service.
 
