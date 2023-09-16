@@ -7,6 +7,7 @@
     "/lib"
   ],
   "scripts": {
+    "build": "tsc",
     "test": "mocha ./test/*-test.js -w",
     "test:single": "nyc mocha ./test/*-test.js"
   },
@@ -28,7 +29,8 @@
   "homepage": "https://github.com/javierdwd/linguee-client#readme",
   "devDependencies": {
     "mocha": "^9.2.1",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "typescript": "5.2.2"
   },
   "dependencies": {
     "axios": "^0.26.0",

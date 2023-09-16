@@ -1,5 +1,5 @@
 const assert = require("assert");
-const endpoint = require("../lib/utils/endpoint");
+const endpoint = require("../dist/utils/endpoint");
 
 describe("utils/endpoint", () => {
   it("should return the endpoint domain", () => {

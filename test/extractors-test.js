@@ -1,12 +1,12 @@
 const fs = require("fs");
 const assert = require("assert");
 const cheerio = require("cheerio");
-const Extractor = require("../lib/extractors/Extractor");
-const TranslationExtractor = require("../lib/extractors/TranslationExtractor");
-const WordExtractor = require("../lib/extractors/WordExtractor");
-const WikiExtractor = require("../lib/extractors/WikiExtractor");
-const LingueeExtractor = require("../lib/extractors/LingueeExtractor");
-const ExtractorsFactory = require("../lib/extractors/ExtractorsFactory");
+const Extractor = require("../dist/extractors/Extractor");
+const TranslationExtractor = require("../dist/extractors/TranslationExtractor");
+const WordExtractor = require("../dist/extractors/WordExtractor");
+const WikiExtractor = require("../dist/extractors/WikiExtractor");
+const LingueeExtractor = require("../dist/extractors/LingueeExtractor");
+const ExtractorsFactory = require("../dist/extractors/ExtractorsFactory");
 
 const readExampleFile = file => {
   let fileContent = fs.readFileSync(`${__dirname}/examples/${file}.html`);

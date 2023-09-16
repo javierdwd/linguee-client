@@ -1,5 +1,5 @@
 const assert = require("assert");
-const linguee = require("../lib/linguee");
+const linguee = require("../dist/linguee");
 
 describe("Linguee", () => {
   describe.skip("translate()", function () {
