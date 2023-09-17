@@ -1,37 +1,62 @@
-export type LANG_CODE = 'EN' | 'DE' | 'FR' | 'ES' | 'ZH' | 'RU' | 'JA' | 'PT' | 'IT' | 'NL' | 'PL' | 'SV' | 'DA' | 'FI' | 'EL' | 'CS' | 'RO' | 'HU' | 'SK' | 'BG' | 'SL' | 'LT' | 'LV' | 'ET' | 'MT';
+export type LANG_CODE =
+  | 'EN'
+  | 'DE'
+  | 'FR'
+  | 'ES'
+  | 'ZH'
+  | 'RU'
+  | 'JA'
+  | 'PT'
+  | 'IT'
+  | 'NL'
+  | 'PL'
+  | 'SV'
+  | 'DA'
+  | 'FI'
+  | 'EL'
+  | 'CS'
+  | 'RO'
+  | 'HU'
+  | 'SK'
+  | 'BG'
+  | 'SL'
+  | 'LT'
+  | 'LV'
+  | 'ET'
+  | 'MT';
 
 export class UnrecognizedLangError extends Error {
-  message: string = 'Unrecognized language'
+  message: string = 'Unrecognized language';
 }
 
 export class Lang {
   private static langsDict: Record<LANG_CODE, string> = {
-    'EN': 'english',
-    'DE': 'german',
-    'FR': 'french',
-    'ES': 'spanish',
-    'ZH': 'chinese',
-    'RU': 'russian',
-    'JA': 'japanese',
-    'PT': 'portuguese',
-    'IT': 'italian',
-    'NL': 'dutch',
-    'PL': 'polish',
-    'SV': 'swedish',
-    'DA': 'danish',
-    'FI': 'finnish',
-    'EL': 'greek',
-    'CS': 'czech',
-    'RO': 'romanian',
-    'HU': 'hungarian',
-    'SK': 'slovak',
-    'BG': 'bulgarian',
-    'SL': 'slovene',
-    'LT': 'lithuanian',
-    'LV': 'latvian',
-    'ET': 'estonian',
-    'MT': 'maltese',
-  }
+    EN: 'english',
+    DE: 'german',
+    FR: 'french',
+    ES: 'spanish',
+    ZH: 'chinese',
+    RU: 'russian',
+    JA: 'japanese',
+    PT: 'portuguese',
+    IT: 'italian',
+    NL: 'dutch',
+    PL: 'polish',
+    SV: 'swedish',
+    DA: 'danish',
+    FI: 'finnish',
+    EL: 'greek',
+    CS: 'czech',
+    RO: 'romanian',
+    HU: 'hungarian',
+    SK: 'slovak',
+    BG: 'bulgarian',
+    SL: 'slovene',
+    LT: 'lithuanian',
+    LV: 'latvian',
+    ET: 'estonian',
+    MT: 'maltese',
+  };
 
   // prettier-ignore
   private static availableTranslations: Record<LANG_CODE, LANG_CODE[]> =  {
@@ -73,10 +98,15 @@ export class Lang {
       return normLangCode;
     } else {
       const normLangName = lang.toLowerCase();
-      const langEntries = Object.entries(Lang.langsDict) as [LANG_CODE, string][];
-      const langIndex = langEntries.findIndex(([_, langName]) => normLangName === langName);
+      const langEntries = Object.entries(Lang.langsDict) as [
+        LANG_CODE,
+        string
+      ][];
+      const langIndex = langEntries.findIndex(
+        ([_, langName]) => normLangName === langName
+      );
 
-      if(langIndex === -1) {
+      if (langIndex === -1) {
         return false;
       }
 
@@ -84,9 +114,8 @@ export class Lang {
     }
   }
 
-
   static available(rootLang?: string): LANG_CODE[] {
-    if(!rootLang) {
+    if (!rootLang) {
       return Object.keys(Lang.availableTranslations) as LANG_CODE[];
     }
 
@@ -108,8 +137,8 @@ export class Lang {
 
     return {
       code: normLangCode,
-      name: Lang.langsDict[normLangCode]
-    }
+      name: Lang.langsDict[normLangCode],
+    };
   }
 }
 

@@ -1,25 +1,25 @@
-const assert = require("assert");
-const Lang = require("../dist/utils/Lang").default;
+const assert = require('assert');
+const Lang = require('../dist/utils/Lang').default;
 
-describe("utils/Lang", () => {
-  it("should return an Object with 25 languages and a list of isolated codes", () => {
+describe('utils/Lang', () => {
+  it('should return an Object with 25 languages and a list of isolated codes', () => {
     assert.strictEqual(Lang.available().length, 25);
   });
 
-  it("should return a language option object", () => {
-    assert.deepStrictEqual(Lang.get("fr"), {
-      code: "FR",
-      name: "french"
+  it('should return a language option object', () => {
+    assert.deepStrictEqual(Lang.get('fr'), {
+      code: 'FR',
+      name: 'french',
     });
 
-    assert.deepStrictEqual(Lang.get("estonian"), {
-      code: "ET",
-      name: "estonian"
+    assert.deepStrictEqual(Lang.get('estonian'), {
+      code: 'ET',
+      name: 'estonian',
     });
   });
 
-  it("should return the available languages for a specified code", () => {
-    assert.deepStrictEqual(Lang.available("RU"), ["EN"]);
+  it('should return the available languages for a specified code', () => {
+    assert.deepStrictEqual(Lang.available('RU'), ['EN']);
 
     // prettier-ignore
     assert.deepStrictEqual(Lang.available("portuguese"), [
