@@ -7,9 +7,10 @@
     "/lib"
   ],
   "scripts": {
+    "dev": "tsc -w",
     "build": "tsc",
-    "test": "mocha ./test/*-test.js -w",
-    "test:single": "nyc mocha ./test/*-test.js"
+    "test:watch": "mocha --node-option inspect ./test/*-test.js -w",
+    "test": "nyc mocha ./test/*-test.js"
   },
   "repository": {
     "type": "git",
