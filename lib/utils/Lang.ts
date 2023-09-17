@@ -1,52 +1,40 @@
-function normalizeLangCode(lang) {
-  if (lang.length === 2) {
-    lang = lang.toUpperCase();
+export type LANG_CODE = 'EN' | 'DE' | 'FR' | 'ES' | 'ZH' | 'RU' | 'JA' | 'PT' | 'IT' | 'NL' | 'PL' | 'SV' | 'DA' | 'FI' | 'EL' | 'CS' | 'RO' | 'HU' | 'SK' | 'BG' | 'SL' | 'LT' | 'LV' | 'ET' | 'MT';
 
-    return lang in this._list ? lang : null;
-  } else {
-    lang = lang.toLowerCase();
-
-    for (let code in this._list) {
-      if (this._list[code] === lang) {
-        return code;
-      }
-    }
-  }
-
-  return null;
+export class UnrecognizedLangError extends Error {
+  message: string = 'Unrecognized language'
 }
 
-const langs = {
-  _codes: [],
-  _list: {
-    EN: "english",
-    DE: "german",
-    FR: "french",
-    ES: "spanish",
-    ZH: "chinese",
-    RU: "russian",
-    JA: "japanese",
-    PT: "portuguese",
-    IT: "italian",
-    NL: "dutch",
-    PL: "polish",
-    SV: "swedish",
-    DA: "danish",
-    FI: "finnish",
-    EL: "greek",
-    CS: "czech",
-    RO: "romanian",
-    HU: "hungarian",
-    SK: "slovak",
-    BG: "bulgarian",
-    SL: "slovene",
-    LT: "lithuanian",
-    LV: "latvian",
-    ET: "estonian",
-    MT: "maltese"
-  },
+export class Lang {
+  private static langsDict: Record<LANG_CODE, string> = {
+    'EN': 'english',
+    'DE': 'german',
+    'FR': 'french',
+    'ES': 'spanish',
+    'ZH': 'chinese',
+    'RU': 'russian',
+    'JA': 'japanese',
+    'PT': 'portuguese',
+    'IT': 'italian',
+    'NL': 'dutch',
+    'PL': 'polish',
+    'SV': 'swedish',
+    'DA': 'danish',
+    'FI': 'finnish',
+    'EL': 'greek',
+    'CS': 'czech',
+    'RO': 'romanian',
+    'HU': 'hungarian',
+    'SK': 'slovak',
+    'BG': 'bulgarian',
+    'SL': 'slovene',
+    'LT': 'lithuanian',
+    'LV': 'latvian',
+    'ET': 'estonian',
+    'MT': 'maltese',
+  }
+
   // prettier-ignore
-  _availableTranslations: {
+  private static availableTranslations: Record<LANG_CODE, LANG_CODE[]> =  {
     EN: ["DE", "FR", "ES", "ZH", "RU", "JA", "PT", "IT", "NL", "PL", "SV", "DA", "FI", "EL", "CS", "RO", "HU", "SK", "BG", "SL", "LT", "LV", "ET", "MT"],
     DE: ["EN", "FR", "ES", "PT", "IT", "NL", "PL", "SV", "DA", "FI", "EL", "CS", "RO", "HU", "SK", "BG", "SL", "LT", "LV", "ET", "MT"],
     FR: ["EN", "DE", "ES", "PT", "IT", "NL", "PL", "SV", "DA", "FI", "EL", "CS", "RO", "HU", "SK", "BG", "SL", "LT", "LV", "ET", "MT"],
@@ -72,43 +60,57 @@ const langs = {
     LV: ["EN", "DE", "FR", "ES", "PT", "IT", "NL", "PL", "SV", "DA", "FI", "EL", "CS", "RO", "HU", "SK", "BG", "SL", "LT", "ET", "MT"],
     ET: ["EN", "DE", "FR", "ES", "PT", "IT", "NL", "PL", "SV", "DA", "FI", "EL", "CS", "RO", "HU", "SK", "BG", "SL", "LT", "LV", "MT"],
     MT: ["EN", "DE", "FR", "ES", "PT", "IT", "NL", "PL", "SV", "DA", "FI", "EL", "CS", "RO", "HU", "SK", "BG", "SL", "LT", "LV", "ET"],
-  },
-  available(lang = "") {
-    code = normalizeLangCode.call(this, lang);
+  }
 
-    if (!code) {
-      return false;
+  static isLangCode(lang: LANG_CODE | string): lang is LANG_CODE {
+    return Object.prototype.hasOwnProperty.call(Lang.langsDict, lang);
+  }
+
+  private static normalizeLangCode(lang: string): LANG_CODE | false {
+    const normLangCode = lang.toUpperCase();
+
+    if (Lang.isLangCode(normLangCode)) {
+      return normLangCode;
+    } else {
+      const normLangName = lang.toLowerCase();
+      const langEntries = Object.entries(Lang.langsDict) as [LANG_CODE, string][];
+      const langIndex = langEntries.findIndex(([_, langName]) => normLangName === langName);
+
+      if(langIndex === -1) {
+        return false;
+      }
+
+      return langEntries[langIndex][0];
+    }
+  }
+
+
+  static available(rootLang?: string): LANG_CODE[] {
+    if(!rootLang) {
+      return Object.keys(Lang.availableTranslations) as LANG_CODE[];
     }
 
-    return this._availableTranslations[code];
-  },
-  list() {
-    return this._list;
-  },
-  codes() {
-    if (this._codes.length) {
-      return this._codes;
+    const lang = Lang.normalizeLangCode(rootLang);
+
+    if (!lang) {
+      throw new UnrecognizedLangError();
     }
-    this._codes = Object.keys(this._list);
 
-    return this._codes;
-  },
-  get(lang = "") {
-    code = normalizeLangCode.call(this, lang);
+    return Lang.availableTranslations[lang];
+  }
 
-    if (!code) {
+  static get(langCode: string) {
+    const normLangCode = Lang.normalizeLangCode(langCode);
+
+    if (!normLangCode || !Lang.isLangCode(normLangCode)) {
       return null;
     }
 
-    for (let langCode in this._list) {
-      if (langCode === code) {
-        return {
-          code,
-          name: this._list[code]
-        };
-      }
+    return {
+      code: normLangCode,
+      name: Lang.langsDict[normLangCode]
     }
   }
-};
+}
 
-module.exports = langs;
+export default Lang;
