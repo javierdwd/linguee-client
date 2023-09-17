@@ -57,9 +57,6 @@ jspm_packages/
 # next.js build output
 .next
 
-# Editor's config files
-.vscode/
-
 # TypeScript
 .tsbuildinfo
 typings/
