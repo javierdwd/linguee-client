@@ -1,10 +1,9 @@
 const fs = require('fs');
 const assert = require('assert');
 const cheerio = require('cheerio');
-const Extractor = require('../dist/extractors/Extractor');
+const Extractor = require('../dist/extractors/Extractor').default;
 const TranslationExtractor = require('../dist/extractors/TranslationExtractor');
 const WordExtractor = require('../dist/extractors/WordExtractor');
-const WikiExtractor = require('../dist/extractors/WikiExtractor');
 const LingueeExtractor = require('../dist/extractors/LingueeExtractor');
 const ExtractorsFactory = require('../dist/extractors/ExtractorsFactory');
 
@@ -64,7 +63,7 @@ describe('Audio Extractor', () => {
     assert.strictEqual(storage.audios.length, 2);
     assert.strictEqual(
       storage.audios[0].url,
-      'https://www.linguee.com/mp3/EN_US/a3/a363b8d13575101a0226e8d0d054f2e7-100.mp3',
+      'https://www.linguee.com/mp3/EN_US/a3/a363b8d13575101a0226e8d0d054f2e7-100.mp3'
     );
     assert.strictEqual(storage.audios[0].version, 'American English');
   });
@@ -85,7 +84,7 @@ describe('Translation Extractor', () => {
     assert.deepStrictEqual(storage.term, 'respuesta');
     assert.deepStrictEqual(
       storage.examples[0].phrase,
-      'My teacher surely knows the answer.',
+      'My teacher surely knows the answer.'
     );
   });
 });
@@ -217,7 +216,7 @@ describe('Factory', () => {
   it('Should return an TranslationExtractor instance', () => {
     assert.ok(
       extractor.extractors.word.extractors.translation instanceof
-        TranslationExtractor,
+        TranslationExtractor
     );
   });
 });
