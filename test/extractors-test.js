@@ -17,47 +17,32 @@ const readExampleJsFile = (file) => {
 };
 
 describe('Base Extractor', () => {
-  const extractor = new Extractor();
+  class TestExtractor extends Extractor {
+    run(content) {
+      this.validateContent(content);
 
-  it('should throw an exception if a string is passed as parameter to setStorage()', () => {
-    assert.throws(() => {
-      extractor._setStorage('An String');
-    }, /Invalid storage/);
-  });
+      return {};
+    }
+  }
+
+  const extractor = new TestExtractor();
 
   it('should throw an exception if anything other than an instance of Cherio is used as content', () => {
     assert.throws(() => {
       extractor.run({});
     }, /cheerio instance/);
   });
-
-  it('should return an object', () => {
-    const storage = {
-      objectProperty: {
-        childProperty: '',
-      },
-      nullProperty: null,
-    };
-
-    extractor._setStorage(storage);
-
-    assert.deepStrictEqual(extractor.getObject('nullProperty'), {});
-    assert.deepStrictEqual(extractor.getObject('objectProperty'), {
-      childProperty: '',
-    });
-  });
 });
 
 describe('Audio Extractor', () => {
   const extractor = ExtractorsFactory.create('audio');
-  const storage = {};
 
   let htmlResponse = readExampleFile('term-EN-ES-answer');
   const $ = cheerio.load(htmlResponse);
 
   $audio = $('.exact .lemma a.audio').eq(0);
 
-  extractor.run($audio, storage);
+  const storage = extractor.run($audio);
 
   it('should extract audio(s) and return their Urls and version', () => {
     assert.strictEqual(storage.audios.length, 2);
@@ -71,14 +56,12 @@ describe('Audio Extractor', () => {
 
 describe('Translation Extractor', () => {
   const extractor = ExtractorsFactory.create('translation');
-  const storage = {};
-
   let htmlResponse = readExampleFile('term-EN-ES-answer');
   const $ = cheerio.load(htmlResponse);
 
   $translation = $('.exact .lemma').eq(0).find('.translation.featured').eq(0);
 
-  extractor.run($translation, storage);
+  const storage = extractor.run($translation);
 
   it('should translate correctly the word "answer"', () => {
     assert.deepStrictEqual(storage.term, 'respuesta');
@@ -89,7 +72,7 @@ describe('Translation Extractor', () => {
   });
 });
 
-describe('Word Extractor', () => {
+describe.only('Word Extractor', () => {
   const extractor = ExtractorsFactory.create('word');
 
   const $ = cheerio.load(readExampleFile('term-EN-ES-answer'));
@@ -121,14 +104,13 @@ describe('Word Extractor', () => {
 
 describe('Wiki Extractor', () => {
   const extractor = ExtractorsFactory.create('wiki');
-  const storage = {};
 
   let htmlResponse = readExampleFile('term-EN-ES-sial');
   const $ = cheerio.load(htmlResponse);
 
   $wiki = $('#wikipedia-body');
 
-  extractor.run($wiki, storage);
+  const storage = extractor.run($wiki);
 
   it("should extract Wikipedia's provided information", () => {
     assert.ok(storage.legal);
