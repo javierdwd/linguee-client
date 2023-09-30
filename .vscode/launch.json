@@ -5,13 +5,12 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Run Tests",
       "type": "node",
       "request": "launch",
-      "attachSimplePort": 9229,
-      "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ]
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "test"]
     }
   ]
 }
