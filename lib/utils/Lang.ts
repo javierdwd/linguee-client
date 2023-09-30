@@ -26,7 +26,7 @@ export type LANG_CODE =
   | 'MT';
 
 export class UnrecognizedLangError extends Error {
-  message: string = 'Unrecognized language';
+  override message: string = 'Unrecognized language';
 }
 
 export class Lang {
