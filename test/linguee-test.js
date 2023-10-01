@@ -1,8 +1,11 @@
 const assert = require('assert');
 const linguee = require('../dist/linguee');
 
-describe('Linguee', () => {
-  describe.skip('translate()', function () {
+describe('Linguee', function () {
+  // Catch integration errors in CI server  by default.
+  const conditionalTestRunner = process.env.CI ? describe : describe.skip;
+
+  conditionalTestRunner('translate()', function () {
     this.timeout(5000);
 
     it('should translate hello from english to spanish (hola)', async () => {
