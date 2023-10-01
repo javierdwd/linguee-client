@@ -9,7 +9,7 @@ describe('Linguee', () => {
       const translation = await linguee.translate(
         'hello',
         'english',
-        'spanish',
+        'spanish'
       );
       assert.deepStrictEqual(translation.words[0].translations[0].term, 'hola');
     });
@@ -18,7 +18,7 @@ describe('Linguee', () => {
       const translation = await linguee.translate('song', 'english', 'spanish');
       assert.deepStrictEqual(
         translation.words[0].translations[0].term,
-        'canción',
+        'canción'
       );
     });
 
@@ -26,11 +26,11 @@ describe('Linguee', () => {
       const translation = await linguee.translate(
         'hello',
         'english',
-        'russian',
+        'russian'
       );
       assert.deepStrictEqual(
         translation.words[0].translations[0].term,
-        'привет!',
+        'привет!'
       );
     });
   });

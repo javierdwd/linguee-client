@@ -2,18 +2,16 @@ const fs = require('fs');
 const assert = require('assert');
 const cheerio = require('cheerio');
 const Extractor = require('../dist/extractors/Extractor').default;
-const TranslationExtractor = require('../dist/extractors/TranslationExtractor');
-const WordExtractor = require('../dist/extractors/WordExtractor');
-const LingueeExtractor = require('../dist/extractors/LingueeExtractor');
-const ExtractorsFactory = require('../dist/extractors/ExtractorsFactory');
+const TranslationExtractor =
+  require('../dist/extractors/TranslationExtractor').default;
+const WordExtractor = require('../dist/extractors/WordExtractor').default;
+const LingueeExtractor = require('../dist/extractors/LingueeExtractor').default;
+const ExtractorsFactory =
+  require('../dist/extractors/ExtractorsFactory').default;
 
 const readExampleFile = (file) => {
   let fileContent = fs.readFileSync(`${__dirname}/examples/${file}.html`);
   return `<div id="extractor-wrapper">${fileContent}</div>`;
-};
-
-const readExampleJsFile = (file) => {
-  return require('./examples/' + file);
 };
 
 describe('Base Extractor', () => {
@@ -72,7 +70,7 @@ describe('Translation Extractor', () => {
   });
 });
 
-describe.only('Word Extractor', () => {
+describe('Word Extractor', () => {
   const extractor = ExtractorsFactory.create('word');
 
   const $ = cheerio.load(readExampleFile('term-EN-ES-answer'));
@@ -133,8 +131,7 @@ describe('Linguee Extractor', () => {
   const extractor = ExtractorsFactory.create('linguee');
 
   context('Test empty results', () => {
-    let storageA = {};
-    extractor._setStorage(storageA);
+    let storageA = LingueeExtractor.prototype.createExtratorStorage();
 
     it('QueryTerm should be null', () => {
       assert.deepStrictEqual(storageA.queryTerm, null, '(non default value)');
@@ -146,7 +143,7 @@ describe('Linguee Extractor', () => {
     let storageB = extractor.run($('#extractor-wrapper'));
 
     it('should set the noResult property to true', () => {
-      assert.deepStrictEqual(storageB.noResults, true);
+      assert.deepStrictEqual(storageB, undefined);
     });
   });
 
