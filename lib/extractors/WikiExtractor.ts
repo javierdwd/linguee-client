@@ -11,7 +11,7 @@ export interface WikiExtractorStorage extends ExtractorStorage {
 }
 
 export class WikiExtractor
-  extends Extractor<WikiExtractorStorage>
+  extends Extractor
   implements RunableExtractor<WikiExtractorStorage>
 {
   constructor(extractors = {}) {
