@@ -117,6 +117,10 @@ describe('Wiki Extractor', () => {
 
   it('should return the term along with a content and a reference url', () => {
     assert.strictEqual(storage.abstracts[0].term, 'Sial');
+    assert.strictEqual(
+      storage.abstracts[0].content,
+      "In geology, the sial is the upper layer of the Earth's crust made of rocks rich in silicates and aluminium minerals."
+    );
     assert.doesNotThrow(() => {
       const regExp = /^https?:\/\/[a-z]{2}\.wikipedia\.org.*$/;
 

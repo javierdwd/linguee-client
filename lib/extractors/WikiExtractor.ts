@@ -35,8 +35,7 @@ export class WikiExtractor
       storage.abstracts.push({
         term: $abstract.children('h2').text().replace(':', ''),
         sourceUrl: $abstract.find('.source_url a').attr('href'),
-        // content: $abstract.get(0).childNodes[1].data.trim(), // Text node.
-        content: '', // TODO: IMPORTANT! Fix typing and restore the commented code.
+        content: $abstract.contents().eq(1).toString().trim(),
       });
     }
 
