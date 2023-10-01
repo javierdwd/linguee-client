@@ -27,8 +27,8 @@ export type NullableStorage<E extends ExtractorStorage> = E & {
   hasContent: boolean;
 };
 
-export class Extractor<E = ExtractorStorage> {
-  protected extractors: Record<string, RunableExtractor<E>>;
+export class Extractor {
+  protected extractors: Record<string, RunableExtractor<unknown>>; // Must be declared in the child Extractor implementation
 
   constructor(extractors = {}) {
     this.extractors = extractors;

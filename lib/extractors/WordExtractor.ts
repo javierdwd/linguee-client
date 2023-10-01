@@ -6,8 +6,11 @@ import type {
 
 import Extractor, { createExtractorContent } from './Extractor';
 
-import type { TranslationExtractorStorage } from './TranslationExtractor';
-import type { AudioExtractorStorage } from './AudioExtractor';
+import type {
+  TranslationExtractor,
+  TranslationExtractorStorage,
+} from './TranslationExtractor';
+import type { AudioExtractor, AudioExtractorStorage } from './AudioExtractor';
 
 export interface WordExtractorAdditionalInfoStorage extends ExtractorStorage {
   plural: string;
@@ -24,11 +27,18 @@ export interface WordExtractorStorage extends ExtractorStorage {
   audio: AudioExtractorStorage[];
 }
 
+export type WordExtractors = {
+  translation: TranslationExtractor;
+  audio: AudioExtractor;
+};
+
 export class WordExtractor
   extends Extractor
   implements RunableExtractor<WordExtractorStorage>
 {
-  constructor(extractors = {}) {
+  declare extractors: WordExtractors;
+
+  constructor(extractors: WordExtractors) {
     super(extractors);
   }
 
@@ -59,8 +69,7 @@ export class WordExtractor
 
     const $audio = $descriptionWrapper.find('a.audio');
     if ($audio.length) {
-      // TODO: Remove type enforcement requirement.
-      const audio = this.extractors.audio.run($audio) as AudioExtractorStorage;
+      const audio = this.extractors.audio.run($audio);
 
       if (audio) {
         storage.audio.push(audio);
@@ -108,10 +117,9 @@ export class WordExtractor
       const $translations = $translationsLines.find('> .translation');
       if ($translations.length) {
         for (let i = 0; i < $translations.length; i++) {
-          // TODO: Remove type enforcement requirement.
           const translation = this.extractors.translation.run(
             $translations.eq(i)
-          ) as TranslationExtractorStorage;
+          );
 
           storage.translations.push(translation);
         }
@@ -126,10 +134,9 @@ export class WordExtractor
         const $translations = $translationsGroup.eq(i).find('.translation');
 
         for (let j = 0; j < $translations.length; j++) {
-          // TODO: Remove type enforcement requirement.
           const translation = this.extractors.translation.run(
             $translations.eq(j)
-          ) as TranslationExtractorStorage;
+          );
 
           if (!$uncommon.length) {
             storage.translations.push(translation);

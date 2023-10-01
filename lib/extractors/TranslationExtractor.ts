@@ -13,7 +13,7 @@ export interface TranslationExtractorStorage extends ExtractorStorage {
   }>;
 }
 
-class TranslationExtractor
+export class TranslationExtractor
   extends Extractor
   implements RunableExtractor<TranslationExtractorStorage>
 {

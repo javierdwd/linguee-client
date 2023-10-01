@@ -6,8 +6,8 @@ import Extractor, {
 
 import Lang, { LangCode } from '../utils/Lang';
 
-import type { WordExtractorStorage } from './WordExtractor';
-import type { WikiExtractorStorage } from './WikiExtractor';
+import type { WordExtractor, WordExtractorStorage } from './WordExtractor';
+import type { WikiExtractor, WikiExtractorStorage } from './WikiExtractor';
 
 export interface SpellingExtractorStorage {
   term: string;
@@ -25,11 +25,18 @@ export interface LingueeExtractorStorage extends ExtractorStorage {
   to: LangCode;
 }
 
+export type LingueeExtractors = {
+  word: WordExtractor;
+  wiki: WikiExtractor;
+};
+
 export class LingueeExtractor
   extends Extractor
   implements RunableExtractor<LingueeExtractorStorage>
 {
-  constructor(extractors = {}) {
+  declare extractors: LingueeExtractors;
+
+  constructor(extractors: LingueeExtractors) {
     super(extractors);
   }
 
@@ -81,10 +88,7 @@ export class LingueeExtractor
       const $words = $exactContainer.children('.lemma');
 
       for (let i = 0; i < $words.length; i++) {
-        // TODO: Remove type enforcement requirement.
-        const word = this.extractors.word.run(
-          $words.eq(i)
-        ) as WordExtractorStorage;
+        const word = this.extractors.word.run($words.eq(i));
 
         storage.words.push(word);
       }
@@ -109,7 +113,6 @@ export class LingueeExtractor
     const $wiki = content.find('#wikipedia-body');
 
     if ($wiki.length) {
-      // TODO: Remove type enforcement requirement.
       storage.wiki = this.extractors.wiki.run($wiki) as WikiExtractorStorage;
     }
 
