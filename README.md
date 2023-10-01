@@ -1,5 +1,5 @@
-# Lingue Client
-[![Build Status](https://travis-ci.org/javierdwd/linguee-client.svg?branch=master)](https://travis-ci.org/javierdwd/linguee-client)
+# Linguee Client
+[![build-and-run-tests](https://github.com/javierdwd/linguee-client/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/javierdwd/linguee-client/actions/workflows/build-and-test.yml)
 
 Translate words using the Linguee online service.
 
