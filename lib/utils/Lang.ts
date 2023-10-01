@@ -1,4 +1,4 @@
-export type LANG_CODE =
+export type LangCode =
   | 'EN'
   | 'DE'
   | 'FR'
@@ -30,7 +30,7 @@ export class UnrecognizedLangError extends Error {
 }
 
 export class Lang {
-  private static langsDict: Record<LANG_CODE, string> = {
+  private static langsDict: Record<LangCode, string> = {
     EN: 'english',
     DE: 'german',
     FR: 'french',
@@ -59,7 +59,7 @@ export class Lang {
   };
 
   // prettier-ignore
-  private static availableTranslations: Record<LANG_CODE, LANG_CODE[]> =  {
+  private static availableTranslations: Record<LangCode, LangCode[]> =  {
     EN: ["DE", "FR", "ES", "ZH", "RU", "JA", "PT", "IT", "NL", "PL", "SV", "DA", "FI", "EL", "CS", "RO", "HU", "SK", "BG", "SL", "LT", "LV", "ET", "MT"],
     DE: ["EN", "FR", "ES", "PT", "IT", "NL", "PL", "SV", "DA", "FI", "EL", "CS", "RO", "HU", "SK", "BG", "SL", "LT", "LV", "ET", "MT"],
     FR: ["EN", "DE", "ES", "PT", "IT", "NL", "PL", "SV", "DA", "FI", "EL", "CS", "RO", "HU", "SK", "BG", "SL", "LT", "LV", "ET", "MT"],
@@ -87,11 +87,11 @@ export class Lang {
     MT: ["EN", "DE", "FR", "ES", "PT", "IT", "NL", "PL", "SV", "DA", "FI", "EL", "CS", "RO", "HU", "SK", "BG", "SL", "LT", "LV", "ET"],
   }
 
-  static isLangCode(lang: LANG_CODE | string): lang is LANG_CODE {
+  static isLangCode(lang: LangCode | string): lang is LangCode {
     return Object.prototype.hasOwnProperty.call(Lang.langsDict, lang);
   }
 
-  private static normalizeLangCode(lang: string): LANG_CODE | false {
+  private static normalizeLangCode(lang: string): LangCode | false {
     const normLangCode = lang.toUpperCase();
 
     if (Lang.isLangCode(normLangCode)) {
@@ -99,7 +99,7 @@ export class Lang {
     } else {
       const normLangName = lang.toLowerCase();
       const langEntries = Object.entries(Lang.langsDict) as [
-        LANG_CODE,
+        LangCode,
         string
       ][];
       const langIndex = langEntries.findIndex(
@@ -114,9 +114,9 @@ export class Lang {
     }
   }
 
-  static available(rootLang?: string): LANG_CODE[] {
+  static available(rootLang?: string): LangCode[] {
     if (!rootLang) {
-      return Object.keys(Lang.availableTranslations) as LANG_CODE[];
+      return Object.keys(Lang.availableTranslations) as LangCode[];
     }
 
     const lang = Lang.normalizeLangCode(rootLang);

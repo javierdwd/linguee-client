@@ -4,7 +4,7 @@ import type {
   RunableExtractor,
 } from './Extractor';
 
-import Extractor, { CreateExtratorContent } from './Extractor';
+import Extractor, { createExtractorContent } from './Extractor';
 
 import type { TranslationExtractorStorage } from './TranslationExtractor';
 import type { AudioExtractorStorage } from './AudioExtractor';
@@ -88,7 +88,7 @@ export class WordExtractor
       joinAdditionalInfo = true;
 
       $formsVerbs.find('.tag_s .formLink').each((_, elem) => {
-        additionalInfo.verbs.push(CreateExtratorContent(elem).text());
+        additionalInfo.verbs.push(createExtractorContent(elem).text());
       });
     }
 

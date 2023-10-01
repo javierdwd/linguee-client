@@ -1,12 +1,14 @@
-const axios = require('axios');
-const iconv = require('iconv-lite');
-const Lang = require('./utils/Lang').default;
-const Endpoint = require('./utils/Endpoint').default;
-const ExtractorsFactory = require('./extractors/ExtractorsFactory');
+import * as Cheerio from 'cheerio';
+import axios from 'axios';
+import iconv from 'iconv-lite';
+import Lang, { LangCode } from './utils/Lang';
+import Endpoint from './utils/Endpoint';
+import ExtractorsFactory from './extractors/ExtractorsFactory';
+import LingueeExtractor from './extractors/LingueeExtractor';
 
 const linguee = (function () {
   return {
-    translate(term, fromLang, toLang) {
+    translate(term: string, fromLang: LangCode, toLang: LangCode) {
       try {
         const url = Endpoint.createSearchUrl(term, fromLang, toLang);
 
@@ -16,7 +18,11 @@ const linguee = (function () {
             .then((response) => {
               const responseCharset = response.headers['content-type'].match(
                 /.+charset="(?<charset>.*)"$/
-              ).groups.charset;
+              )?.groups?.charset;
+
+              if (!responseCharset) {
+                throw new Error('Unrecognazied service response charset.');
+              }
 
               const data = iconv.decode(
                 Buffer.from(response.data),
@@ -26,15 +32,13 @@ const linguee = (function () {
               );
 
               try {
-                const extractor = ExtractorsFactory.create('linguee');
-                const $ = cheerio.load(
+                const extractor =
+                  ExtractorsFactory.create<LingueeExtractor>('linguee');
+                const $ = Cheerio.load(
                   `<div id="extractor-wrapper">${data}</div>`
                 );
 
                 const result = extractor.run($('#extractor-wrapper'));
-
-                result.from = Lang.get(fromLang).code;
-                result.to = Lang.get(toLang).code;
 
                 return resolve(result);
               } catch (error) {

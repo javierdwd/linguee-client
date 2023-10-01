@@ -12,7 +12,9 @@ export function isExtractorStorage(
   return storage instanceof Object;
 }
 
-export function CreateExtratorContent(elem: unknown): ExtractorContent {
+export function createExtractorContent(
+  elem: Parameters<typeof Cheerio.load>[0]
+): ExtractorContent {
   return Cheerio.load(elem).root();
 }
 
