@@ -15,6 +15,8 @@ It traverse the document (HTML response, there is not a JSON api available), hen
 
 ## Usage
 
+_VanillaJS:_
+
 ```JS
 const linguee = require("linguee-client");
 
@@ -25,6 +27,20 @@ linguee.translate("answer", "EN", "ES")
   .catch(error => {
       console.log(error);
   });
+```
+
+_Typescript:_
+
+```TS
+import linguee from "linguee-client"
+
+try {
+  const translation = await linguee.translate("answer", "EN", "ES");
+
+  console.log(translation); // Linguee translation object or void (term was not found).
+} catch(err: Error) {
+  console.log(error);
+}
 ```
 
 ### The result depends on the word to be translated.

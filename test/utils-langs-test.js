@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Lang = require('../dist/utils/Lang').default;
+const Lang = require('../dist/cjs/utils/Lang').default;
 
 describe('utils/Lang', () => {
   it('should return an Object with 25 languages and a list of isolated codes', () => {

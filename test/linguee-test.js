@@ -1,5 +1,5 @@
 const assert = require('assert');
-const linguee = require('../dist/linguee');
+const linguee = require('../dist/cjs/linguee');
 
 describe('Linguee', function () {
   // Catch integration errors in CI server  by default.

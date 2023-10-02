@@ -1,13 +1,20 @@
 import * as Cheerio from 'cheerio';
 import axios from 'axios';
 import iconv from 'iconv-lite';
-import Lang, { LangCode } from './utils/Lang';
 import Endpoint from './utils/Endpoint';
 import ExtractorsFactory from './extractors/ExtractorsFactory';
-import LingueeExtractor from './extractors/LingueeExtractor';
+import LingueeExtractor, {
+  LingueeExtractorStorage,
+} from './extractors/LingueeExtractor';
 
-const linguee = {
-  translate(term: string, fromLang: LangCode, toLang: LangCode) {
+import type { LangCode } from './utils/Lang';
+
+class Linguee {
+  static translate(
+    term: string,
+    fromLang: LangCode,
+    toLang: LangCode
+  ): Promise<LingueeExtractorStorage | void> {
     try {
       const url = Endpoint.createSearchUrl(term, fromLang, toLang);
 
@@ -20,7 +27,7 @@ const linguee = {
             )?.groups?.charset;
 
             if (!responseCharset) {
-              throw new Error('Unrecognazied service response charset.');
+              throw new Error('Unrecognized service response charset.');
             }
 
             const data = iconv.decode(
@@ -49,7 +56,9 @@ const linguee = {
     } catch (error) {
       return Promise.reject(error);
     }
-  },
-};
+  }
+}
 
-export default linguee;
+export default Linguee;
+
+module.exports = Linguee;

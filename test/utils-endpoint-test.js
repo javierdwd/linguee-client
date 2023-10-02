@@ -1,5 +1,5 @@
 const assert = require('assert');
-const Endpoint = require('../dist/utils/Endpoint').default;
+const Endpoint = require('../dist/cjs/utils/Endpoint').default;
 
 describe('utils/endpoint', () => {
   it('should return the endpoint domain', () => {
