@@ -36,9 +36,6 @@ build/Release
 node_modules/
 jspm_packages/
 
-# TypeScript v1 declaration files
-typings/
-
 # Optional npm cache directory
 .npm
 
@@ -60,5 +57,7 @@ typings/
 # next.js build output
 .next
 
-# Editor's config files
-.vscode/
+# TypeScript
+.tsbuildinfo
+typings/
+dist/

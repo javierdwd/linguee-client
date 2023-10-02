@@ -1,4 +1,5 @@
 # Linguee Client
+
 [![build-and-run-tests](https://github.com/javierdwd/linguee-client/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/javierdwd/linguee-client/actions/workflows/build-and-test.yml)
 
 Translate words using the Linguee online service.
@@ -14,6 +15,8 @@ It traverse the document (HTML response, there is not a JSON api available), hen
 
 ## Usage
 
+_VanillaJS:_
+
 ```JS
 const linguee = require("linguee-client");
 
@@ -26,12 +29,25 @@ linguee.translate("answer", "EN", "ES")
   });
 ```
 
+_Typescript:_
+
+```TS
+import linguee from "linguee-client"
+
+try {
+  const translation = await linguee.translate("answer", "EN", "ES");
+
+  console.log(translation); // Linguee translation object or void (term was not found).
+} catch(err: Error) {
+  console.log(error);
+}
+```
+
 ### The result depends on the word to be translated.
 
 ```JSON
 {
   "from": "EN",
-  "noResults": false,
   "to": "ES",
   "queryTerm": "state",
   "spelling": null,

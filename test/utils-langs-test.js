@@ -1,29 +1,28 @@
-const assert = require("assert");
-const langs = require("../lib/utils/langs");
+const assert = require('assert');
+const Lang = require('../dist/cjs/utils/Lang').default;
 
-describe("utils/langs", () => {
-  it("should return an Object with 25 languages and a list of isolated codes", () => {
-    assert.strictEqual(Object.entries(langs.list()).length, 25);
-    assert.strictEqual(langs.codes().length, 25);
+describe('utils/Lang', () => {
+  it('should return an Object with 25 languages and a list of isolated codes', () => {
+    assert.strictEqual(Lang.available().length, 25);
   });
 
-  it("should return a language option object", () => {
-    assert.deepStrictEqual(langs.get("fr"), {
-      code: "FR",
-      name: "french"
+  it('should return a language option object', () => {
+    assert.deepStrictEqual(Lang.get('fr'), {
+      code: 'FR',
+      name: 'french',
     });
 
-    assert.deepStrictEqual(langs.get("estonian"), {
-      code: "ET",
-      name: "estonian"
+    assert.deepStrictEqual(Lang.get('estonian'), {
+      code: 'ET',
+      name: 'estonian',
     });
   });
 
-  it("should return the available languages for a specified code", () => {
-    assert.deepStrictEqual(langs.available("RU"), ["EN"]);
+  it('should return the available languages for a specified code', () => {
+    assert.deepStrictEqual(Lang.available('RU'), ['EN']);
 
     // prettier-ignore
-    assert.deepStrictEqual(langs.available("portuguese"), [
+    assert.deepStrictEqual(Lang.available("portuguese"), [
       "EN", "DE", "FR", "ES", "IT",
       "NL", "PL", "SV", "DA", "FI",
       "EL", "CS", "RO", "HU", "SK",
