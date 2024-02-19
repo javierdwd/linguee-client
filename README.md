@@ -138,13 +138,13 @@ try {
 
 ## Test
 
-`npm run test:single`
+`npm run test`
 
 ### **_TODOs_**
 
 - [x] Improve responses with the less common translations, and audio examples.
 - [x] Allow to set the languages for translation.
-- [ ] Add test coverage.
+- [x] Add test coverage.
 - [ ] Add documentation pages.
 
 ## License
